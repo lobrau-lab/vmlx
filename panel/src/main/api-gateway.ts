@@ -1468,7 +1468,6 @@ export class ApiGateway extends EventEmitter {
         return this.handleOllamaPs(res);
       }
       if (url === "/api/version")
-        // mlxstudio#72: Copilot in VS Code gates on version >= 0.6.4. Real
         // Ollama is on 0.12.x; report a plausible recent real version so
         // other version-gated clients don't refuse to connect. Kept in sync
         // with vmlx_engine/server.py:ollama_version.
@@ -2505,7 +2504,6 @@ export class ApiGateway extends EventEmitter {
     if (!session) return this.sendJson(res, 404, { error: "model not found" });
     if (!this.requireSessionAuth(req, res, session)) return;
 
-    // mlxstudio#72 — Copilot (Ollama spec v0.20.x) gates on `capabilities`.
     // Compute from the saved session config; fall back to permissive defaults.
     let cfg: any = {};
     try {

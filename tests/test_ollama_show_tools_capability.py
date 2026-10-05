@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 """`/api/show` must not advertise "tools" for a model with no tool parser.
 
-Ollama's `capabilities` list is what GitHub Copilot and Open WebUI gate on. The
 endpoint appended "tools" unconditionally, justified in-source as a "permissive
 default — most models support tools", directly beneath a line that fetched
 `globals().get("_tool_parser")` and never read the result.
@@ -10,7 +9,6 @@ That name has never existed anywhere in server.py — the real global is
 `_tool_call_parser`. So the lookup was always None and the gate it was clearly
 meant to feed never ran. Worth stating plainly, because the obvious "fix" of
 wiring `if _tp is not None` would have removed "tools" from EVERY model and
-dropped vMLX out of Copilot's picker entirely. The typo is the only reason the
 endpoint worked at all.
 
 Advertising tools without a parser is not harmless: the client sends tool

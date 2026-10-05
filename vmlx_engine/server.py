@@ -7145,7 +7145,6 @@ async def check_rate_limit(request: Request):
         )
 
 
-# mlxstudio#63: kernel panic on heavy VS Code OAICopilot traffic.
 # On macOS, continuous-batching under extreme unified-memory pressure can
 # trip an IOKit command-buffer failure that escalates to a whole-system
 # kernel panic. We reject new inference requests with 503 BEFORE Metal
@@ -17805,7 +17804,6 @@ async def ollama_version_head():
 async def ollama_version():
     """Ollama version shim for client compat checks.
 
-    GitHub Copilot in VS Code gates on ``version >= 0.6.4`` (mlxstudio#72).
     Real Ollama is on 0.12.x; we report a plausible recent real version so
     other version-gated clients don't refuse to connect. Kept in sync with
     panel/src/main/api-gateway.ts.
@@ -17822,13 +17820,10 @@ async def ollama_version():
 async def ollama_show(fastapi_request: Request):
     """Ollama-compatible model info.
 
-    Ollama spec v0.20.x adds a ``capabilities`` list that GitHub Copilot
     gates on to decide whether to surface a model (mlxstudio#72 follow-up).
-    Without it, Copilot drops all vMLX models from its picker.
 
     Populates `details` and `model_info` from the loaded bundle's
     `config.json` + `jang_config.json` so Ollama clients (Open WebUI,
-    Continue, Copilot) can render quant level, parameter count, and
     family. The previous all-empty-stub response made vMLX look like a
     stripped-down or broken Ollama backend in those UIs.
     """
@@ -17841,7 +17836,6 @@ async def ollama_show(fastapi_request: Request):
     # existed anywhere in this module — the global is ``_tool_call_parser`` —
     # so the lookup was always None and the intended gate never ran. (Which is
     # lucky: gating on that typo'd name would have removed "tools" from EVERY
-    # model and dropped vMLX out of Copilot's picker entirely.)
     #
     # Advertising tools without a parser is not harmless. The client sends tool
     # schemas, the model emits its native tool markup, nothing extracts it, and
@@ -18302,7 +18296,6 @@ async def ollama_chat(fastapi_request: Request):
     #   (2) empty delta + finish_reason="tool_calls"
     # Real Ollama places tool_calls on the final `done:true` NDJSON line.
     # The old stateless adapter put them on chunk (1) (done:false) and
-    # left chunk (2) with no tool_calls — GitHub Copilot, Continue.dev,
     # and Cline all silently ignore the call in that shape.
     #
     # We buffer tool_calls from chunk (1) locally, skip the adapter's

@@ -5,9 +5,9 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "vmlx"
 version = "1.6.73"
-description = "MLX inference server for Apple Silicon — Text, Image, Video & Audio generation"
+description = "Private proprietary MLX inference server native to M5 MacBook — as little overhead as possible, maximum speed maximum accurate"
 readme = "README.md"
-license = {text = "Apache-2.0"}
+license = {text = "Proprietary"}
 requires-python = ">=3.11,<3.15"
 authors = [
     {name = "Jinho Jang", email = "eric@jangq.ai"}
@@ -17,7 +17,7 @@ classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: Apache Software License",
+
     "Operating System :: MacOS",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
